@@ -16,7 +16,7 @@ export default class Book extends Component{
 								this.props.selectElement(this.props.bookProp);
 			  } else if(this.state.clazz){
 						this.setState({clazz: false});
-						this.props.selectElement(null);
+						this.props.selectElement([]);
 						this.props.alterUniq();
 					}
 		}

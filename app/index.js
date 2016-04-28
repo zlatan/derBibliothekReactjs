@@ -19,6 +19,7 @@ class App extends Component{
 		this.state = {bookSt: [], attributes: [], pageSize: 2, pageNumber: 0, links: {}, selectedElement: []};
 		// this.updatePageSize = this.updatePageSize.bind(this);
 		 this.onCreate = this.onCreate.bind(this);
+		 this.onUpdate = this.onUpdate.bind(this);
 		 this.onDelete = this.onDelete.bind(this);
 		 this.onNavigate = this.onNavigate.bind(this);
 		 this.onChangePageSize =this.onChangePageSize.bind(this);
@@ -80,6 +81,25 @@ class App extends Component{
 		});
 	}
 
+	onUpdate(book, updateBook) {
+		client({
+			method: 'PUT',
+			path: book._links.self.href,
+			entity: updateBook,
+			headers: {
+				'Content-Type': 'application/json',
+				'If-Match': '0'
+			}
+		}).done(response => {
+			this.loadFromServer(this.state.pageSize,this.state.pageNumber);
+		}, response => {
+			if (response.status.code === 412) {
+				alert('DENIED: Unable to update ' +
+					book.entity._links.self.href + '. Your copy is stale.');
+			}
+		});
+	}
+
 
 	onChangePageSize(pageSz){
 		this.setState({pageSize: pageSz}, function(){
@@ -112,8 +132,8 @@ class App extends Component{
 				<div className="panel-heading">Книги</div>
 						<div className="panel-body">
 									<Create onCreate={this.onCreate}/>
-									<Read/>
-									<Update/>
+									<Read selectedElement={this.state.selectedElement}/>
+									<Update onUpdate={this.onUpdate} selectedElement={this.state.selectedElement}/>
 									<Delete onDelete={this.onDelete} selectedElement={this.state.selectedElement}/>
 						</div>
 									<BookList books_props={this.state.bookSt}

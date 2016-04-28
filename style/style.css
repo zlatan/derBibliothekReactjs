@@ -20,8 +20,19 @@ word-wrap: break-word;
 margin: 1px 0;
 }
 
+.container {
+padding-top: 25px;
+}
+
+
 .pagination {
   float:right;
+}
+
+ul.pagination {
+  float:right;
+  margin: 0px;
+  margin-right: 15px;
 }
 
 

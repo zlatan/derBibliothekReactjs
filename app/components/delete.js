@@ -29,8 +29,35 @@ export default class Delete extends Component {
       handleDeleteClicked(e) {
         e.preventDefault();
         // console.log(this.props.selectedElement);
-        // this.props.onDelete(this.props.selectedElement);
+        this.props.onDelete(this.props.selectedElement);
         this.handleModalCloseRequest();
+     }
+
+     deleteBody() {
+       if (this.props.selectedElement.length == 0){
+         return(
+           <div>
+          <div className="modal-body">
+            <h4>Please select an element </h4>
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-default" onClick={this.handleModalCloseRequest}>Close</button>
+          </div>
+          </div>
+         )
+     } else {
+       return (
+          <div>
+         <div className="modal-body">
+           <h4>Are you sure want to delete book with title: {this.props.selectedElement.title} </h4>
+         </div>
+         <div className="modal-footer">
+           <button type="button" className="btn btn-default" onClick={this.handleModalCloseRequest}>Close</button>
+           <button type="button" className="btn btn-primary" onClick={this.handleDeleteClicked}>Delete</button>
+         </div>
+         </div>
+       )
+      }
      }
 
     render() {
@@ -41,8 +68,7 @@ export default class Delete extends Component {
             className="Modal__Bootstrap modal-dialog"
             closeTimeoutMS={150}
             isOpen={this.state.modalIsOpen}
-            onRequestClose={this.handleModalCloseRequest}
-          >
+            onRequestClose={this.handleModalCloseRequest}>
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" onClick={this.handleModalCloseRequest}>
@@ -51,13 +77,7 @@ export default class Delete extends Component {
                 </button>
                 <h4 className="modal-title">Delete Element</h4>
               </div>
-              <div className="modal-body">
-                {/*<h4>Are you sure want to delete book with title: {this.props.selectedElement.title} </h4>*/}
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-default" onClick={this.handleModalCloseRequest}>Close</button>
-                <button type="button" className="btn btn-primary" onClick={this.handleDeleteClicked}>Delete</button>
-              </div>
+              {this.deleteBody()}
             </div>
           </Modal>
         </div>
