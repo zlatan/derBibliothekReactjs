@@ -9,15 +9,20 @@ import Update from './components/update';
 import Delete from './components/delete';
 import Pager from './components/pager';
 
+import { Provider } from 'react-redux';
+import ReduxPromise from 'redux-promise';
+import { createStore, applyMiddleware } from 'redux';
+import reducers from './reducers';
+
 
 const root = 'http://localhost:8090/api';
 
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
 class App extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {bookSt: [], attributes: [], pageSize: 2, pageNumber: 0, links: {}, selectedElement: []};
-		// this.updatePageSize = this.updatePageSize.bind(this);
 		 this.onCreate = this.onCreate.bind(this);
 		 this.onUpdate = this.onUpdate.bind(this);
 		 this.onDelete = this.onDelete.bind(this);
@@ -148,6 +153,9 @@ class App extends Component{
 	}
 
 
-ReactDOM.render(<App />,
+ReactDOM.render(
+	<Provider store={createStoreWithMiddleware(reducers)}>
+	<App />
+	</Provider>,
   document.querySelector('.container')
 );

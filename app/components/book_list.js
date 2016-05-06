@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import Book from './book';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchWeather } from '../actions/index';
 
-export default class BookList extends Component{
+
+class BookList extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {uniq: false};
 		this.alterUniq = this.alterUniq.bind(this);
 		this.selectElement = this.selectElement.bind(this);
-
+		this.props.fetchWeather();
 		}
 
 		alterUniq(){
@@ -53,3 +57,9 @@ export default class BookList extends Component{
   )
  }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchWeather }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(BookList);

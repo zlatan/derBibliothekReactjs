@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 
-export default class Book extends Component{
+
+class Book extends Component{
 	constructor(props) {
     super(props);
 		this.state = {clazz: false};
@@ -22,6 +24,7 @@ export default class Book extends Component{
 		}
 
 	render() {
+		console.log(this.props.weather);
 		var rwClass = classNames({
 			'': true,
 			'danger': this.state.clazz
@@ -35,3 +38,9 @@ export default class Book extends Component{
 		)
 	}
 }
+
+function mapStateToProps({ weather }) {
+  return { weather };
+}
+
+export default connect(mapStateToProps)(Book);
