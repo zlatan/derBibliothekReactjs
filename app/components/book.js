@@ -24,7 +24,11 @@ class Book extends Component{
 		}
 
 	render() {
-		console.log(this.props.weather);
+
+		this.props.weather.map(element =>
+			console.log(element.book)
+		);
+
 		var rwClass = classNames({
 			'': true,
 			'danger': this.state.clazz

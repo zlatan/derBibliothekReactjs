@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Book from './book';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchWeather } from '../actions/index';
@@ -23,6 +24,7 @@ class BookList extends Component{
 		}
 
 		render() {
+		console.log('this.props.books_props:',this.props.books_props);
 		var books = this.props.books_props.map(book =>
 			<Book key={book._links.self.href}
 			 			uniq={this.state.uniq}
@@ -36,17 +38,16 @@ class BookList extends Component{
 					<tr>
             	<th>
 									<div className="col-xs-6">
-									Name <span className="glyphicon glyphicon-sort"></span>
-		              <input className="form-control" placeholder="Име" />
+ 									<span className="glyphicon glyphicon-sort"></span>
+									<input className="form-control" placeholder="Име"/>
 									</div>
               </th>
     					<th>
 									<div className="col-xs-6">
-									Title
 									<input className="form-control" placeholder="Заглавие" />
 									</div>
 							</th>
-    					<th className="table-danger">QR Code</th>
+    					<th className="table-danger">Сигнатура</th>
     				</tr>
         </thead>
         <tbody>
