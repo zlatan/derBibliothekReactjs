@@ -8,10 +8,14 @@ import Update from './update';
 import Delete from './delete';
 import Pager from './pager';
 
-
 const root = 'http://localhost:8090/api';
 
-export default class App extends Component{
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchWeather } from '../actions/index';
+
+
+class App extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {bookSt: [], attributes: [], pageSize: 2, pageNumber: 0, links: {}, selectedElement: []};
@@ -21,6 +25,7 @@ export default class App extends Component{
 		 this.onNavigate = this.onNavigate.bind(this);
 		 this.onChangePageSize =this.onChangePageSize.bind(this);
 		 this.selectElementTop = this.selectElementTop.bind(this);
+     this.props.fetchWeather();
 	}
 
 	loadFromServer(pageSize, pageNumber) {
@@ -143,3 +148,9 @@ export default class App extends Component{
 		)
  		}
 	}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchWeather }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(App);

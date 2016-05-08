@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Book from './book';
-
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchWeather } from '../actions/index';
 
 
 class BookList extends Component{
@@ -12,7 +9,6 @@ class BookList extends Component{
 		this.state = {uniq: false};
 		this.alterUniq = this.alterUniq.bind(this);
 		this.selectElement = this.selectElement.bind(this);
-		this.props.fetchWeather();
 		}
 
 		alterUniq(){
@@ -24,14 +20,15 @@ class BookList extends Component{
 		}
 
 		render() {
-		console.log('this.props.books_props:',this.props.books_props);
-		var books = this.props.books_props.map(book =>
-			<Book key={book._links.self.href}
-			 			uniq={this.state.uniq}
-						alterUniq={this.alterUniq}
-						bookProp={book}
-						selectElement={this.selectElement}/>
-		);
+		 if (this.props.weather[0]){
+		 var books = this.props.weather[0].map(book =>
+		 	<Book key={book._links.self.href}
+		 	 			uniq={this.state.uniq}
+		 				alterUniq={this.alterUniq}
+		 				bookProp={book}
+		 				selectElement={this.selectElement}/>
+					);
+				}
 		return (
 			 <table  className="table table-bordered table-hover table-striped" >
         <thead>
@@ -59,8 +56,8 @@ class BookList extends Component{
  }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchWeather }, dispatch);
+function mapStateToProps({ weather }) {
+  return { weather };
 }
 
-export default connect(null, mapDispatchToProps)(BookList);
+export default connect(mapStateToProps)(BookList);
