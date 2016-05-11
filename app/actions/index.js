@@ -1,9 +1,11 @@
 import axios from 'axios';
 
 export const FETCH_WEATHER = 'FETCH_WEATHER';
+const BASE_URL ='http://localhost:8090/api';
 
-export function fetchWeather() {
-  const url = 'http://localhost:8090/api/book?size=3&page=0';
+
+export function fetchWeather(size,page) {
+  const url = `${BASE_URL}/book?size=${size}&page=${page}`;
   const request = axios.get(url);
 
   return {

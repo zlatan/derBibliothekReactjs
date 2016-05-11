@@ -91,7 +91,7 @@ export default class Update extends Component {
       updateBook['price'] = parseFloat(updateBook['price']);
       console.log(updateBook);
       console.log(this.props.selectedElement);
-      this.props.onUpdate(this.props.selectedElement, updateBook);
+      //this.props.onUpdate(this.props.selectedElement, updateBook);
       this.handleModalCloseRequest();
    }
 
