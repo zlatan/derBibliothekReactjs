@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchWeather } from '../actions/index';
 import { bindActionCreators } from 'redux';
+import { setPageSize } from '../actions/set_page_size';
 
 import * as config from '../config';
 
@@ -22,29 +23,30 @@ class Pager extends Component{
     }
 
     onChangePageSize(event){
+      this.props.setPageSize(event.target.value);
       this.setState({pageSize: event.target.value})
       var newPage = Math.floor((this.state.pageSize*(parseInt(this.state.pageNumber)))/(event.target.value));
       this.setState({pageNumber: newPage})
-      this.props.fetchWeather(event.target.value,newPage);
+      this.props.fetchWeather(event.target.value,newPage,this.props.sortBy);
     }
 
     nextPage(){
-          this.props.fetchWeather(this.state.pageSize,nextG);
+          this.props.fetchWeather(this.state.pageSize,nextG,this.props.sortBy);
           this.setState({pageNumber: nextG});
       }
 
     prevPage(){
-      this.props.fetchWeather(this.state.pageSize,prevG);
+      this.props.fetchWeather(this.state.pageSize,prevG,this.props.sortBy);
       this.setState({pageNumber: prevG});
     }
 
     firstPage(){
-      this.props.fetchWeather(this.state.pageSize,firstG);
+      this.props.fetchWeather(this.state.pageSize,firstG,this.props.sortBy);
       this.setState({pageNumber: firstG});
     }
 
     lastPage(){
-      this.props.fetchWeather(this.state.pageSize,lastG);
+      this.props.fetchWeather(this.state.pageSize,lastG,this.props.sortBy);
       this.setState({pageNumber: lastG});
     }
 
@@ -100,7 +102,6 @@ class Pager extends Component{
         navLinks.push(<li key="last" onClick={this.lastPage}> <a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>);
       }
     }
-    console.log(this.props.sortBy);
 		return (
       <div className="row">
         {infoLine}
@@ -122,7 +123,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchWeather }, dispatch);
+  return {
+    setPageSize: bindActionCreators(setPageSize, dispatch),
+    fetchWeather: bindActionCreators(fetchWeather, dispatch)
+  }
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pager);

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import { connect } from 'react-redux';
 
 
-export default class Read extends Component {
+class Read extends Component {
 
   constructor(props) {
     super(props);
@@ -26,7 +27,7 @@ export default class Read extends Component {
     }
 
     loadData(){
-      if (this.props.selectedElement.length == 0){
+      if (this.props.activeBook.length == 0){
         return(
           <div>
          <div className="modal-body">
@@ -46,30 +47,30 @@ export default class Read extends Component {
           <div className="form-group">
           <label for="inputEmail3" className="col-sm-2 control-label">price</label>
           <div className="col-sm-10">
-          <h4>{this.props.selectedElement.price}</h4>
+          <h4>{this.props.activeBook.price}</h4>
           </div>
           <label for="inputEmail3" className="col-sm-2 control-label">signature</label>
           <div className="col-sm-10">
-          <h4>{this.props.selectedElement.signature}</h4>
+          <h4>{this.props.activeBook.signature}</h4>
           </div>
           <label for="inputEmail3" className="col-sm-2 control-label">title</label>
           <div className="col-sm-10">
-          <h4>{this.props.selectedElement.title}</h4></div>
+          <h4>{this.props.activeBook.title}</h4></div>
           <label for="inputEmail3" className="col-sm-2 control-label">author</label>
           <div className="col-sm-10">
-          <h4>{this.props.selectedElement.author}</h4></div>
+          <h4>{this.props.activeBook.author}</h4></div>
           <label for="inputEmail3" className="col-sm-2 control-label">volume</label>
           <div className="col-sm-10">
-          <h4>{this.props.selectedElement.volume}</h4></div>
+          <h4>{this.props.activeBook.volume}</h4></div>
           <label for="inputEmail3" className="col-sm-2 control-label">year</label>
           <div className="col-sm-10">
-          <h4>{this.props.selectedElement.yearPublishing}</h4></div>
+          <h4>{this.props.activeBook.yearPublishing}</h4></div>
           <label for="inputEmail3" className="col-sm-2 control-label">deduction</label>
           <div className="col-sm-10">
-          <h4>{this.props.selectedElement.deduction} </h4></div>
+          <h4>{this.props.activeBook.deduction} </h4></div>
           <label for="inputEmail3" className="col-sm-2 control-label">barCode</label>
           <div className="col-sm-10">
-          <h4>{this.props.selectedElement.barCode}</h4></div>
+          <h4>{this.props.activeBook.barCode}</h4></div>
           </div>
           </form>
       </div>
@@ -102,3 +103,9 @@ export default class Read extends Component {
   }
 
 }
+
+function mapStateToProps({ activeBook }) {
+  return { activeBook };
+}
+
+export default connect(mapStateToProps)(Read);

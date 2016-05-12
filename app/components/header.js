@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-
 import { connect } from 'react-redux';
 import { sortBy } from '../actions/sort';
 import { bindActionCreators } from 'redux';
+import { fetchWeather } from '../actions/index';
+import * as config from '../config';
 
 class Header extends Component{
   constructor(props) {
 		super(props);
 		this.state = {sortClass: true, sortByNameAsc: true};
 		this.sortByName = this.sortByName.bind(this);
+    this.alterIcon = this.alterIcon.bind(this);
 		}
 
 
     sortByName(field){
       if(!this.state.sortByNameAsc){
-        this.props.sortBy("name,asc")
+        this.props.sortBy(field.concat(",asc"));
+        this.props.fetchWeather(this.props.setPageSize,config.DEFALT_PAGE_NUMBER,field.concat(",asc"));
       } else {
-        this.props.sortBy("name,desc")
+        this.props.sortBy(field.concat(",desc"));
+        this.props.fetchWeather(this.props.setPageSize,config.DEFALT_PAGE_NUMBER,field.concat(",desc"));
       }
-      this.setState({sortClass: !this.state.sortClass});
-      this.setState({sortByNameAsc: !this.state.sortByNameAsc});
+      this.alterIcon(field);
+    }
+
+    alterIcon(field){
+      if (field == "author"){
+        this.setState({sortClass: !this.state.sortClass});
+        this.setState({sortByNameAsc: !this.state.sortByNameAsc});
+      }
     }
 
   render() {
@@ -33,7 +43,7 @@ class Header extends Component{
         <tr>
             <th>
                 <div className="col-xs-6">
-                <span  onClick={this.sortByName.bind(null, "name")} className={sortClass}></span>
+                <span  onClick={this.sortByName.bind(null, "author")} className={sortClass}></span>
                 <input className="form-control" placeholder="Име"/>
                 </div>
             </th>
@@ -48,8 +58,16 @@ class Header extends Component{
 }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ sortBy }, dispatch);
+function mapStateToProps({ setPageSize }) {
+  return { setPageSize };
 }
 
-export default connect(null, mapDispatchToProps)(Header);
+
+function mapDispatchToProps(dispatch) {
+  return {
+    sortBy: bindActionCreators(sortBy, dispatch),
+    fetchWeather: bindActionCreators(fetchWeather, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

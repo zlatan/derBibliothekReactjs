@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import { connect } from 'react-redux';
 
 
-export default class Update extends Component {
-
+class Update extends Component {
   constructor(props) {
     super(props);
     this.state = {modalIsOpen: false};
@@ -27,7 +27,7 @@ export default class Update extends Component {
     }
 
     loadData(){
-      if (this.props.selectedElement.length == 0){
+      if (this.props.activeBook.length == 0){
         return(
           <div>
          <div className="modal-body">
@@ -47,28 +47,28 @@ export default class Update extends Component {
           <div className="form-group">
           <label for="inputEmail3" className="col-sm-2 control-label">price</label>
           <div className="col-sm-10">
-          <input type="email" className="form-control" id="inputEmail3" placeholder="price" defaultValue={this.props.selectedElement.price} ref="price"/></div>
+          <input type="email" className="form-control" id="inputEmail3" placeholder="price" defaultValue={this.props.activeBook.price} ref="price"/></div>
           <label for="inputEmail3" className="col-sm-2 control-label">signature</label>
           <div className="col-sm-10">
-          <input type="email" className="form-control" id="inputEmail3" placeholder="signature" defaultValue={this.props.selectedElement.signature} ref="signature"/></div>
+          <input type="email" className="form-control" id="inputEmail3" placeholder="signature" defaultValue={this.props.activeBook.signature} ref="signature"/></div>
           <label for="inputEmail3" className="col-sm-2 control-label">title</label>
           <div className="col-sm-10">
-          <input type="email" className="form-control" id="inputEmail3" placeholder="title" defaultValue={this.props.selectedElement.title} ref="title"/></div>
+          <input type="email" className="form-control" id="inputEmail3" placeholder="title" defaultValue={this.props.activeBook.title} ref="title"/></div>
           <label for="inputEmail3" className="col-sm-2 control-label">author</label>
           <div className="col-sm-10">
-          <input type="email" className="form-control" id="inputEmail3" placeholder="author" defaultValue={this.props.selectedElement.author} ref="author"/></div>
+          <input type="email" className="form-control" id="inputEmail3" placeholder="author" defaultValue={this.props.activeBook.author} ref="author"/></div>
           <label for="inputEmail3" className="col-sm-2 control-label">volume</label>
           <div className="col-sm-10">
-          <input type="email" className="form-control" id="inputEmail3" placeholder="volume" defaultValue={this.props.selectedElement.volume} ref="volume"/></div>
+          <input type="email" className="form-control" id="inputEmail3" placeholder="volume" defaultValue={this.props.activeBook.volume} ref="volume"/></div>
           <label for="inputEmail3" className="col-sm-2 control-label">year</label>
           <div className="col-sm-10">
-          <input type="email" className="form-control" id="inputEmail3" placeholder="yearPublishing" defaultValue={this.props.selectedElement.yearPublishing} ref="yearPublishing"/></div>
+          <input type="email" className="form-control" id="inputEmail3" placeholder="yearPublishing" defaultValue={this.props.activeBook.yearPublishing} ref="yearPublishing"/></div>
           <label for="inputEmail3" className="col-sm-2 control-label">deduction</label>
           <div className="col-sm-10">
-          <input type="email" className="form-control" id="inputEmail3" placeholder="deduction" defaultValue={this.props.selectedElement.deduction} ref="deduction"/></div>
+          <input type="email" className="form-control" id="inputEmail3" placeholder="deduction" defaultValue={this.props.activeBook.deduction} ref="deduction"/></div>
           <label for="inputEmail3" className="col-sm-2 control-label">barCode</label>
           <div className="col-sm-10">
-          <input type="email" className="form-control" id="inputEmail3" placeholder="barCode" defaultValue={this.props.selectedElement.barCode} ref="barCode"/></div>
+          <input type="email" className="form-control" id="inputEmail3" placeholder="barCode" defaultValue={this.props.activeBook.barCode} ref="barCode"/></div>
           </div>
           </form>
       </div>
@@ -90,7 +90,7 @@ export default class Update extends Component {
       });
       updateBook['price'] = parseFloat(updateBook['price']);
       console.log(updateBook);
-      console.log(this.props.selectedElement);
+      console.log(this.props.activeBook);
       //this.props.onUpdate(this.props.selectedElement, updateBook);
       this.handleModalCloseRequest();
    }
@@ -120,3 +120,9 @@ export default class Update extends Component {
   }
 
 }
+
+function mapStateToProps({ activeBook }) {
+  return { activeBook };
+}
+
+export default connect(mapStateToProps)(Update);

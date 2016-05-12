@@ -8,36 +8,19 @@ import { bindActionCreators } from 'redux';
 import * as config from '../config';
 
 class BookList extends Component{
-	constructor(props) {
-		super(props);
-		this.state = {uniq: false};
-		this.alterUniq = this.alterUniq.bind(this);
-		this.selectElement = this.selectElement.bind(this);
-		}
-
-		alterUniq(){
-			this.setState({uniq: !this.state.uniq})
-		}
-
-		selectElement(element){
-			this.props.selectElementTop(element);
-		}
-
 		componentDidMount() {
-			this.props.fetchWeather(config.DEFALT_PAGE_SIZE,config.DEFALT_PAGE_NUMBER);
-		}
-
+			this.props.fetchWeather(config.DEFALT_PAGE_SIZE,
+															config.DEFALT_PAGE_NUMBER,
+															config.DEFALT_SORT_CRITERION);
+			}
 		render() {
 		 if (this.props.weather[0]){
 		 var books = this.props.weather[0]._embedded.book.map(book =>
 		 	<Book key={book._links.self.href}
-		 	 			uniq={this.state.uniq}
-		 				alterUniq={this.alterUniq}
-		 				bookProp={book}
-		 				selectElement={this.selectElement}/>
-					);
+						selected={ ((book == this.props.selectBook)? true : false ) }
+		 				bookProp={book}/>  );
 				}
-		return (
+		 return (
 			 <table  className="table table-bordered table-hover table-striped" >
         <thead>
 								<Header/>
@@ -46,13 +29,15 @@ class BookList extends Component{
                 {books}
         </tbody>
 			</table>
-
-  )
- }
+  	)
+ 	}
 }
 
-function mapStateToProps({ weather }) {
-  return { weather };
+function mapStateToProps(state) {
+  return {
+    weather: state.weather,
+    selectBook: state.activeBook
+   };
 }
 
 function mapDispatchToProps(dispatch) {

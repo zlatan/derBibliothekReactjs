@@ -1,8 +1,8 @@
 import * as config from '../config';
 
-export default function(state = config.DEFALT_SORT_CRITERION, action) {
+export default function(state = config.DEFALT_PAGE_SIZE, action) {
   switch(action.type) {
-  case 'SORT_BY':
+  case 'SET_PAGE_SIZE':
     return action.payload;
   }
 

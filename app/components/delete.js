@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import { connect } from 'react-redux';
 
 
-export default class Delete extends Component {
+class Delete extends Component {
 
     constructor(props) {
       super(props);
@@ -28,13 +29,12 @@ export default class Delete extends Component {
 
       handleDeleteClicked(e) {
         e.preventDefault();
-        // console.log(this.props.selectedElement);
-        this.props.onDelete(this.props.selectedElement);
+        this.props.onDelete(this.props.activeBook);
         this.handleModalCloseRequest();
      }
 
      deleteBody() {
-       if (this.props.selectedElement.length == 0){
+       if (this.props.activeBook.length == 0){
          return(
            <div>
           <div className="modal-body">
@@ -49,7 +49,7 @@ export default class Delete extends Component {
        return (
           <div>
          <div className="modal-body">
-           <h4>Are you sure want to delete book with title: {this.props.selectedElement.title} </h4>
+           <h4>Are you sure want to delete book with title: {this.props.activeBook.title} </h4>
          </div>
          <div className="modal-footer">
            <button type="button" className="btn btn-default" onClick={this.handleModalCloseRequest}>Close</button>
@@ -84,3 +84,9 @@ export default class Delete extends Component {
       );
   }
 }
+
+function mapStateToProps({ activeBook }) {
+  return { activeBook };
+}
+
+export default connect(mapStateToProps)(Delete);
