@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
+import createAction  from '../actions/create';
 
-class Create extends Component {
+
+export default class Create extends Component {
 
   constructor(props) {
     super(props);
@@ -33,7 +35,8 @@ class Create extends Component {
       atributes.map( element => {
         newBook[element] = ( ReactDOM.findDOMNode(this.refs[element]).value.trim() );
       });
-      this.props.onCreate(newBook);
+      createAction(newBook);
+      //console.log(newBook);
       this.handleModalCloseRequest();
    }
 
@@ -100,5 +103,3 @@ class Create extends Component {
     );
   }
 }
-
-export default Create;

@@ -1,9 +1,9 @@
-import { FETCH_WEATHER } from '../actions/index';
+import { SEARCH_BY } from '../actions/index';
 
 export default function(state = [], action) {
   console.log('FETCH_WEATHER-REDUCER');
   switch (action.type) {
-  case FETCH_WEATHER:
+  case SEARCH_BY:
     return [ action.payload.data, ...state ];
   }
   return state;

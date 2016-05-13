@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
+import deleteAction  from '../actions/delete';
 
 
 class Delete extends Component {
@@ -29,7 +30,7 @@ class Delete extends Component {
 
       handleDeleteClicked(e) {
         e.preventDefault();
-        this.props.onDelete(this.props.activeBook);
+        deleteAction(this.props.activeBook._links.self.href);
         this.handleModalCloseRequest();
      }
 

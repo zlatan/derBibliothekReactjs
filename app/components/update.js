@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
+import updateAction  from '../actions/update';
 
 
 class Update extends Component {
@@ -89,8 +90,8 @@ class Update extends Component {
         updateBook[element] = ( ReactDOM.findDOMNode(this.refs[element]).value.trim() );
       });
       updateBook['price'] = parseFloat(updateBook['price']);
-      console.log(updateBook);
-      console.log(this.props.activeBook);
+      updateAction(this.props.activeBook,updateBook);
+      //console.log(this.props.activeBook);
       //this.props.onUpdate(this.props.selectedElement, updateBook);
       this.handleModalCloseRequest();
    }

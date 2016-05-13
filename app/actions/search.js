@@ -3,11 +3,8 @@ import * as config from '../config';
 
 export const FETCH_WEATHER = 'FETCH_WEATHER';
 
-console.log('FETCH_WEATHER-ACTION');
-
-
-export function fetchWeather(size,page,sort) {
-  const url = `/${config.DEFALT_ENDPOINT}?size=${size}&page=${page}&sort=${sort}`;
+export function searchAction(author) {
+  const url = `/${config.DEFALT_ENDPOINT}/search/findByAuthor?author=${author}`;
   const request = axios.get(url, { baseURL: config.DEFALT_BASE_URL, timeout: 1000,
                               validateStatus: function (status) {
                               if (status != 200) { alert("Status code: ".concat(status)) ;}
@@ -19,7 +16,7 @@ export function fetchWeather(size,page,sort) {
                                   });
 
   return {
-    type: FETCH_WEATHER,
+    type: SEARCH_BY,
     payload: request
   };
 }

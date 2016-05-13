@@ -4,13 +4,16 @@ import { connect } from 'react-redux';
 import { sortBy } from '../actions/sort';
 import { bindActionCreators } from 'redux';
 import { fetchWeather } from '../actions/index';
+import { searchAction } from '../actions/search';
+
 import * as config from '../config';
 
 class Header extends Component{
   constructor(props) {
 		super(props);
-		this.state = {sortClass: true, sortByNameAsc: true};
+		this.state = {sortClass: true, sortByNameAsc: true, searchTerm: ''};
 		this.sortByName = this.sortByName.bind(this);
+    this.searchByName = this.searchByName.bind(this);
     this.alterIcon = this.alterIcon.bind(this);
 		}
 
@@ -24,6 +27,10 @@ class Header extends Component{
         this.props.fetchWeather(this.props.setPageSize,config.DEFALT_PAGE_NUMBER,field.concat(",desc"));
       }
       this.alterIcon(field);
+    }
+
+    searchByName(field){
+      this.props.searchAction(field.target.value);
     }
 
     alterIcon(field){
@@ -44,7 +51,7 @@ class Header extends Component{
             <th>
                 <div className="col-xs-6">
                 <span  onClick={this.sortByName.bind(null, "author")} className={sortClass}></span>
-                <input className="form-control" placeholder="Име"/>
+                <input onChange={this.searchByName} className="form-control" placeholder="Име"/>
                 </div>
             </th>
             <th>
@@ -66,7 +73,8 @@ function mapStateToProps({ setPageSize }) {
 function mapDispatchToProps(dispatch) {
   return {
     sortBy: bindActionCreators(sortBy, dispatch),
-    fetchWeather: bindActionCreators(fetchWeather, dispatch)
+    fetchWeather: bindActionCreators(fetchWeather, dispatch),
+    searchAction: bindActionCreators(searchAction, dispatch)
   }
 }
 

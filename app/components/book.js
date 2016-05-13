@@ -10,10 +10,10 @@ import { bindActionCreators } from 'redux';
 class Book extends Component{
 	constructor(props) {
     super(props);
-    this.onChangeAlaBala = this.onChangeAlaBala.bind(this);
+    this.onSelect = this.onSelect.bind(this);
 		}
 
-		onChangeAlaBala(){
+		onSelect(){
 				if (!this.props.selected){
 				this.props.selectBook(this.props.bookProp);
 				} else {
@@ -26,7 +26,7 @@ class Book extends Component{
 			'danger': this.props.selected
 		});
 		return (
-			<tr onClick={this.onChangeAlaBala} className={rwClass} >
+			<tr onClick={this.onSelect} className={rwClass} >
 				<td>{this.props.bookProp.author}</td>
 				<td>{this.props.bookProp.title}</td>
 				<td>{this.props.bookProp.barCode}</td>
