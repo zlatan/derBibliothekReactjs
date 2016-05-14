@@ -1,9 +1,9 @@
 import axios from 'axios';
 import * as config from '../config';
 
-export const FETCH_WEATHER = 'FETCH_WEATHER';
 
 export function searchAction(author) {
+  console.log("searchAction");
   const url = `/${config.DEFALT_ENDPOINT}/search/findByAuthor?author=${author}`;
   const request = axios.get(url, { baseURL: config.DEFALT_BASE_URL, timeout: 1000,
                               validateStatus: function (status) {
@@ -16,7 +16,7 @@ export function searchAction(author) {
                                   });
 
   return {
-    type: SEARCH_BY,
+    type: 'FETCH_WEATHER',
     payload: request
   };
 }
