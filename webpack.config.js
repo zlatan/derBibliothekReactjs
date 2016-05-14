@@ -1,3 +1,5 @@
+var node_dir = __dirname + '/node_modules';
+
 module.exports = {
   entry: [
     './app/index.js'
@@ -14,7 +16,8 @@ module.exports = {
     }]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'], 
+	alias: { 'stompjs': node_dir + '/stompjs/lib/stomp.js' }
   },
   devServer: {
     contentBase: './'
