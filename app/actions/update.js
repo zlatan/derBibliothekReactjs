@@ -12,7 +12,6 @@ export default function updateAction(olddata,newdata) {
   });
 
   axios.patch(url,data).catch(function (response) {
-    console.log(response);
    alert("Status code: ".concat(response.status) );
    });
 }

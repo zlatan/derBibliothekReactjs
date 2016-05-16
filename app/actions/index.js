@@ -3,9 +3,6 @@ import * as config from '../config';
 
 export const FETCH_WEATHER = 'FETCH_WEATHER';
 
-console.log('FETCH_WEATHER-ACTION');
-
-
 export function fetchWeather(size,page,sort) {
   const url = `/${config.DEFALT_ENDPOINT}?size=${size}&page=${page}&sort=${sort}`;
   const request = axios.get(url, { baseURL: config.DEFALT_BASE_URL, timeout: 1000,

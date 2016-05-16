@@ -7,23 +7,14 @@ import { fetchWeather } from '../actions/index';
 import { bindActionCreators } from 'redux';
 import * as config from '../config';
 
-const stompClient = require('./websocket-listener');
-
-
 class BookList extends Component{
 		componentDidMount() {
 			this.props.fetchWeather(config.DEFALT_PAGE_SIZE,
 															config.DEFALT_PAGE_NUMBER,
 															config.DEFALT_SORT_CRITERION);
-			stompClient.register([
-													{route: '/topic/newEmployee', callback: this.refreshAndGoToLastPage},
-													{route: '/topic/updateEmployee', callback: this.refreshCurrentPage},
-													{route: '/topic/deleteEmployee', callback: this.refreshCurrentPage}
-												]);
-
 			}
 		render() {
-		 if (this.props.weather[0]){
+	  if (this.props.weather[0]){
 		 var books = this.props.weather[0]._embedded.book.map(book =>
 		 	<Book key={book._links.self.href}
 						selected={ ((book == this.props.selectBook)? true : false ) }

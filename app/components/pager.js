@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 import { fetchWeather } from '../actions/index';
 import { bindActionCreators } from 'redux';
 import { setPageSize } from '../actions/set_page_size';
-
 import * as config from '../config';
+import stompClient from './websocket-listener';
 
 
 var firstG, lastG, nextG, prevG;
@@ -20,7 +19,40 @@ class Pager extends Component{
     this.prevPage = this.prevPage.bind(this);
     this.firstPage = this.firstPage.bind(this);
     this.lastPage = this.lastPage.bind(this);
+    this.refreshCurrentPage = this.refreshCurrentPage.bind(this);
+    this.addElement = this.addElement.bind(this);
     }
+
+    componentDidMount() {
+      stompClient.register([
+                          {route: '/topic/newBook', callback: this.addElement},
+                          {route: '/topic/updateBook', callback: this.refreshCurrentPage},
+                          {route: '/topic/deleteBook', callback: this.refreshCurrentPage}
+                        ]);
+    }
+
+      addElement(){
+        if (this.props.sortBy == 'id,asc' )
+        {
+          this.props.fetchWeather(this.state.pageSize,this.state.pageNumber,this.props.sortBy);
+          if (lastG)
+          {
+            this.lastPage();
+          }
+        }
+      }
+
+
+      refreshCurrentPage(msg){
+        var currentState = this.props.weather[0]._embedded.book.map( book =>
+              book._links.self.href.match(/book\/([0-9]+)/)[1] );
+        var remoreChange = JSON.parse(msg.body);
+
+        if ( currentState.indexOf(remoreChange.ID.toString()) != -1 ) {
+          this.props.fetchWeather(this.state.pageSize,this.state.pageNumber,this.props.sortBy);
+        }
+
+      }
 
     onChangePageSize(event){
       this.props.setPageSize(event.target.value);
@@ -83,22 +115,22 @@ class Pager extends Component{
       }
 
       if(this.props.weather[0]._links.first){
-         firstG = this.props.weather[0]._links.first.href.match(/page=([0-9+])/)[1];
+         firstG = this.props.weather[0]._links.first.href.match(/page=([0-9]+)/)[1];
         navLinks.push(<li key="first" onClick={this.firstPage}> <a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>);
       }
 
       if(this.props.weather[0]._links.prev){
-         prevG = this.props.weather[0]._links.prev.href.match(/page=([0-9+])/)[1];
+         prevG = this.props.weather[0]._links.prev.href.match(/page=([0-9]+)/)[1];
         navLinks.push(<li key="prev" onClick={this.prevPage}><a>Previous</a></li>);
       }
 
       if(this.props.weather[0]._links.next){
-         nextG = this.props.weather[0]._links.next.href.match(/page=([0-9+])/)[1];
+         nextG = this.props.weather[0]._links.next.href.match(/page=([0-9]+)/)[1];
         navLinks.push(<li key="next" onClick={this.nextPage}><a>Next</a></li>);
       }
 
       if(this.props.weather[0]._links.last){
-         lastG = this.props.weather[0]._links.last.href.match(/page=([0-9+])/)[1];
+         lastG = this.props.weather[0]._links.last.href.match(/page=([0-9]+)/)[1];
         navLinks.push(<li key="last" onClick={this.lastPage}> <a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>);
       }
     }
