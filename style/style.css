@@ -79,3 +79,27 @@ ul.pagination {
   float:left;
   padding-right: 10px;
 }
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
+
+.pages {
+  margin-left: 30%;
+}
+
+.inputName {
+  width: 75% !important;
+}
+
+.spanIcon {
+  position: relative;
+  top: 5px !important;
+  margin-right: 10px;
+}
+
+.glyphiconSize {
+    font-size: 22px;
+}

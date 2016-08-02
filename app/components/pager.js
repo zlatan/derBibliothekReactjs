@@ -101,16 +101,16 @@ class Pager extends Component{
         var totalPages = this.props.weather[0].page.totalPages;
         infoLine.push(
           <div key="infoLine">
-          <div className="col-sm-1 col-xs-1 col-md-1" >
+          <div className="col-sm-1 col-xs-1 col-md-1 left" title="книги на страница">
                    <select id="lang" className="form-control" onChange={this.onChangePageSize} value={this.state.pageSize}>
                    <option value={config.DEFALT_PAGE_SIZE}>{config.DEFALT_PAGE_SIZE}</option>
                    <option value="3">3</option>
                    <option value="5">5</option>
                    <option value="10">10</option>
-                </select> книги на стр.
+                </select>
         </div>
-        <div>от общо {totalElements}</div>
-        <div> Стр: {number} от  {totalPages} </div>
+        <div className="total left">Общо {totalElements} книги</div>
+        <div className="pages left">Стр: {number} от  {totalPages}</div>
       </div>);
       }
 

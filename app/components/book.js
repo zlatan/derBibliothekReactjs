@@ -30,6 +30,7 @@ class Book extends Component{
 				<td>{this.props.bookProp.author}</td>
 				<td>{this.props.bookProp.title}</td>
 				<td>{this.props.bookProp.barCode}</td>
+				<td>{this.props.bookProp.keywords}</td>
 			</tr>
 		)
 	}

@@ -42,16 +42,18 @@ class Header extends Component{
 
   render() {
     var sortClass = classNames({
-      'glyphicon glyphicon-sort-by-attributes-alt': !this.state.sortClass,
-      'glyphicon glyphicon-sort-by-attributes': this.state.sortClass
+      'glyphicon glyphicon-sort-by-attributes-alt spanIcon glyphiconSize': !this.state.sortClass,
+      'glyphicon glyphicon-sort-by-attributes spanIcon glyphiconSize': this.state.sortClass
     });
 
   return (
         <tr>
             <th>
-                <div className="col-xs-6">
-                <span  onClick={this.sortByName.bind(null, "author")} className={sortClass}></span>
-                <input onChange={this.searchByName} className="form-control" placeholder="Име"/>
+                <div className="col-xs-8">
+                <div className="left">
+                <span onClick={this.sortByName.bind(null, "author")} className={sortClass}></span>
+                </div>
+                <input onChange={this.searchByName} className="form-control inputName" placeholder="Име"/>
                 </div>
             </th>
             <th>
@@ -59,7 +61,16 @@ class Header extends Component{
                 <input className="form-control" placeholder="Заглавие" />
                 </div>
             </th>
-            <th className="table-danger">Сигнатура</th>
+            <th>
+                <div className="col-xs-6">
+                <input className="form-control" placeholder="Сигнатура" />
+                </div>
+            </th>
+            <th>
+                <div className="col-xs-10">
+                <input className="form-control" placeholder="Тематични рубрики" />
+                </div>
+            </th>
         </tr>
   )
 }
